@@ -4,14 +4,30 @@
 		<span class="addContainer" v-on:click="addTodo">
 			<i class="fas fa-plus addBtn" />
 		</span>
+
+		<!-- use the modal component, pass in the prop -->
+		<Modal v-if="showModal" @close="showModal = false">
+			<h3 slot="header">경고!</h3>
+			<p slot="body">
+				내용을 입력하세요
+			</p>
+			<div slot="footer">
+				<button class="closeModalBtn" @click="showModal = false">
+					<i class="fas fa-times"></i>
+				</button>
+			</div>
+		</Modal>
 	</div>
 </template>
 
 <script>
+import Modal from "./common/Modal";
+
 export default {
 	data: function() {
 		return {
 			newTodoItem: "",
+			showModal: false,
 		};
 	},
 	methods: {
@@ -19,11 +35,16 @@ export default {
 			if (this.newTodoItem !== "") {
 				this.$emit("addTodoItem", this.newTodoItem);
 				this.clearInput();
+			} else {
+				this.showModal = true;
 			}
 		},
 		clearInput: function() {
 			this.newTodoItem = "";
 		},
+	},
+	components: {
+		Modal: Modal,
 	},
 };
 </script>
@@ -52,5 +73,11 @@ input:focus {
 .addBtn {
 	color: white;
 	vertical-align: middle;
+}
+.closeModalBtn {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+	color: #42b983;
 }
 </style>
