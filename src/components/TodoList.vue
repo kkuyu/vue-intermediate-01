@@ -17,7 +17,6 @@
 				<span class="removeBtn" v-on:click="() => removeTodo(todoItem, index)">
 					<i class="fas fa-trash-alt " />
 				</span>
-				<!-- <button v-on:click=""></button> -->
 			</li>
 		</ul>
 	</div>

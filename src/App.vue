@@ -7,7 +7,7 @@
 			v-on:removeTodoItem="removeOneItem"
 			v-on:toggleItem="toggleOneItem"
 		/>
-		<TodoFooter />
+		<TodoFooter v-on:clearAll="clearAllItem" />
 	</div>
 </template>
 
@@ -51,6 +51,10 @@ export default {
 			this.todoItems[index].completed = !this.todoItems[index].completed;
 			localStorage.removeItem("todo_" + todoItem.item);
 			localStorage.setItem("todo_" + todoItem.item, JSON.stringify(todoItem));
+		},
+		clearAllItem: function() {
+			localStorage.clear();
+			this.todoItems = [];
 		},
 		sortList: function() {
 			this.todoItems.sort((a, b) => {
