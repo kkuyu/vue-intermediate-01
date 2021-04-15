@@ -29,13 +29,10 @@ export default {
 	methods: {
 		removeTodo: function(todoItem, index) {
 			console.log("removeTodo", todoItem, index);
-			localStorage.removeItem("todo_" + todoItem.item);
-			this.propsdata.splice(index, 1);
+			this.$emit("removeTodoItem", todoItem, index);
 		},
-		toggleComplete: function(todoItem) {
-			todoItem.completed = !todoItem.completed;
-			localStorage.removeItem("todo_" + todoItem.item);
-			localStorage.setItem("todo_" + todoItem.item, JSON.stringify(todoItem));
+		toggleComplete: function(todoItem, index) {
+			this.$emit("toggleItem", todoItem, index);
 		},
 	},
 };
