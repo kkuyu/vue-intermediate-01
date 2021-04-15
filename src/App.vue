@@ -35,26 +35,36 @@ export default {
 	},
 	methods: {
 		addOneItem: function(todoItem) {
+			var date = new Date();
 			var obj = {
-				timestamp: new Date().getTime(),
+				time: this.getDateStr(date),
+				timestamp: date.getTime(),
 				completed: false,
 				item: todoItem,
 			};
-			localStorage.setItem("todo_" + todoItem, JSON.stringify(obj));
+			localStorage.setItem("todo_" + obj.timestamp, JSON.stringify(obj));
 			this.todoItems.push(obj);
 		},
 		removeOneItem: function(todoItem, index) {
-			localStorage.removeItem("todo_" + todoItem.item);
+			localStorage.removeItem("todo_" + todoItem.timestamp);
 			this.todoItems.splice(index, 1);
 		},
 		toggleOneItem: function(todoItem, index) {
 			this.todoItems[index].completed = !this.todoItems[index].completed;
-			localStorage.removeItem("todo_" + todoItem.item);
-			localStorage.setItem("todo_" + todoItem.item, JSON.stringify(todoItem));
+			localStorage.removeItem("todo_" + todoItem.timestamp);
+			localStorage.setItem(
+				"todo_" + todoItem.timestamp,
+				JSON.stringify(todoItem)
+			);
 		},
 		clearAllItem: function() {
 			localStorage.clear();
 			this.todoItems = [];
+		},
+		getDateStr: function(date) {
+			return `Date:
+        ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}
+				${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 		},
 		sortList: function() {
 			this.todoItems.sort((a, b) => {

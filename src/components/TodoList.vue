@@ -11,9 +11,12 @@
 					v-bind:class="{ checkBtnCompleted: todoItem.completed }"
 					v-on:click="toggleComplete(todoItem, index)"
 				/>
-				<span v-bind:class="{ textCompleted: todoItem.completed }">{{
-					todoItem.item
-				}}</span>
+				<span class="item" v-bind:class="{ textCompleted: todoItem.completed }">
+					<strong class="itemText">{{ todoItem.item }}</strong>
+					<em class="itemTime">
+						{{ todoItem.time }}
+					</em>
+				</span>
 				<span class="removeBtn" v-on:click="() => removeTodo(todoItem, index)">
 					<i class="fas fa-trash-alt " />
 				</span>
@@ -33,6 +36,9 @@ export default {
 		toggleComplete: function(todoItem, index) {
 			this.$emit("toggleItem", todoItem, index);
 		},
+		timestampToDate: function(timestamp) {
+			return "aa";
+		},
 	},
 };
 </script>
@@ -47,8 +53,6 @@ ul {
 li {
 	display: flex;
 	min-height: 50px;
-	height: 50px;
-	line-height: 50px;
 	margin: 0.5rem 0;
 	padding: 0 0.9rem;
 	background: #fff;
@@ -57,6 +61,7 @@ li {
 .removeBtn {
 	margin-left: auto;
 	color: #de4343;
+	line-height: 45px;
 }
 .checkBtn {
 	line-height: 45px;
@@ -69,5 +74,17 @@ li {
 .textCompleted {
 	text-decoration: line-through;
 	color: #b3adad;
+}
+.item {
+	padding: 10px 0;
+}
+.itemText {
+	display: block;
+	line-height: 1.5;
+}
+.itemTime {
+	font-size: 0.8rem;
+	font-style: normal;
+	opacity: 0.5;
 }
 </style>
