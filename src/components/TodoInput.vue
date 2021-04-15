@@ -18,7 +18,7 @@ export default {
 		addTodo: function() {
 			if (this.newTodoItem !== "") {
 				var obj = {
-					id: 0,
+					timestamp: new Date().getTime(),
 					completed: false,
 					item: this.newTodoItem,
 				};
