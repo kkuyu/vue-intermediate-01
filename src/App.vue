@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<TodoHeader />
-		<TodoInput />
+		<TodoInput v-on:addTodoItem="addOneItem" />
 		<TodoList v-bind:propsdata="todoItems" />
 		<TodoFooter />
 	</div>
@@ -26,12 +26,19 @@ export default {
 					JSON.parse(localStorage.getItem(localStorage.key(i)))
 				);
 			}
-			console.log("asis", this.todoItems);
 			this.sortList();
-			console.log("tobe", this.todoItems);
 		}
 	},
 	methods: {
+		addOneItem: function(todoItem) {
+			var obj = {
+				timestamp: new Date().getTime(),
+				completed: false,
+				item: todoItem,
+			};
+			localStorage.setItem("todo_" + todoItem, JSON.stringify(obj));
+			this.todoItems.push(obj);
+		},
 		sortList: function() {
 			this.todoItems.sort((a, b) => {
 				return a.timestamp - b.timestamp;
