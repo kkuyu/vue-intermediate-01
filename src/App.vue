@@ -18,13 +18,13 @@ import TodoList from "./components/TodoList.vue";
 import TodoFooter from "./components/TodoFooter.vue";
 
 export default {
-	data: function() {
+	data() {
 		return { todoItems: [] };
 	},
-	created: function() {
+	created() {
 		console.log("created");
 		if (localStorage.length > 0) {
-			for (var i = 0; i < localStorage.length; i++) {
+			for (let i = 0; i < localStorage.length; i++) {
 				if (localStorage.key(i).indexOf("todo_") === -1) continue;
 				this.todoItems.push(
 					JSON.parse(localStorage.getItem(localStorage.key(i)))
@@ -34,9 +34,9 @@ export default {
 		}
 	},
 	methods: {
-		addOneItem: function(todoItem) {
-			var date = new Date();
-			var obj = {
+		addOneItem(todoItem) {
+			const date = new Date();
+			const obj = {
 				time: this.getDateStr(date),
 				timestamp: date.getTime(),
 				completed: false,
@@ -45,11 +45,11 @@ export default {
 			localStorage.setItem("todo_" + obj.timestamp, JSON.stringify(obj));
 			this.todoItems.push(obj);
 		},
-		removeOneItem: function(todoItem, index) {
+		removeOneItem(todoItem, index) {
 			localStorage.removeItem("todo_" + todoItem.timestamp);
 			this.todoItems.splice(index, 1);
 		},
-		toggleOneItem: function(todoItem, index) {
+		toggleOneItem(todoItem, index) {
 			this.todoItems[index].completed = !this.todoItems[index].completed;
 			localStorage.removeItem("todo_" + todoItem.timestamp);
 			localStorage.setItem(
@@ -57,26 +57,26 @@ export default {
 				JSON.stringify(todoItem)
 			);
 		},
-		clearAllItem: function() {
+		clearAllItem() {
 			localStorage.clear();
 			this.todoItems = [];
 		},
-		getDateStr: function(date) {
+		getDateStr(date) {
 			return `Date:
         ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}
 				${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 		},
-		sortList: function() {
+		sortList() {
 			this.todoItems.sort((a, b) => {
 				return a.timestamp - b.timestamp;
 			});
 		},
 	},
 	components: {
-		TodoHeader: TodoHeader,
-		TodoInput: TodoInput,
-		TodoList: TodoList,
-		TodoFooter: TodoFooter,
+		TodoHeader,
+		TodoInput,
+		TodoList,
+		TodoFooter,
 	},
 };
 </script>
