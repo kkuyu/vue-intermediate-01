@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<ul>
+		<transition-group name="list" tag="ul">
 			<li
 				v-for="(todoItem, index) in propsdata"
-				v-bind:key="index + todoItem.item"
+				v-bind:key="todoItem.timestamp"
 				class="shadow"
 			>
 				<i
@@ -21,7 +21,7 @@
 					<i class="fas fa-trash-alt " />
 				</span>
 			</li>
-		</ul>
+		</transition-group>
 	</div>
 </template>
 
@@ -35,9 +35,6 @@ export default {
 		},
 		toggleComplete: function(todoItem, index) {
 			this.$emit("toggleItem", todoItem, index);
-		},
-		timestampToDate: function(timestamp) {
-			return "aa";
 		},
 	},
 };
@@ -86,5 +83,15 @@ li {
 	font-size: 0.8rem;
 	font-style: normal;
 	opacity: 0.5;
+}
+
+.list-enter-active,
+.list-leave-active {
+	transition: all 0.5s;
+}
+.list-enter,
+.list-leave-to {
+	opacity: 0;
+	transform: translateY(30px);
 }
 </style>
